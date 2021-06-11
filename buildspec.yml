@@ -1,0 +1,18 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions: 
+      python: 3.8
+    commands:
+      - echo "[+] Scanning for security vulnerability within dependencies"
+  pre_build:
+    commands:
+      - pipenv install
+      - cd src
+      - pytest -v -s
+      - coverage run refactor_lambda.py
+      - coverage report -m
+  reports:
+    UnitTests:
+      files:
+        - '**/*'
